@@ -9,3 +9,4 @@ plt.plot(X, C)
 plt.plot(X, S)
 
 plt.show()
+
