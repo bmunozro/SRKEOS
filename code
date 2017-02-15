@@ -1,12 +1,44 @@
-%matplotlib inline
-import math as mm
-import numpy as np
+from scipy.optimize import newton
+
+def f(V):
+    P=3.56830
+    T=290.15
+    R = 8.314
+    Tc = 305.4
+    Pc = 4.88
+    w = .099
+    Tr = T/Tc
+    b = .08664*R*Tc/Pc
+    m=.480+1.574*w-.176*(w**2)
+    a = .42748*((R*Tc)**2)/Pc*(1+m*(1-Tr**(.5)))**2
+    return (R*T/(V-b)-a/(V*(V+b))-P)
+x=newton(f,1)
+y=newton(f,121)
+z=newton(f,400)
+print(x,y,z)
+
 import matplotlib.pyplot as plt
-X = np.linspace(-np.pi, np.pi, 256, endpoint=True)
-C, S = np.cos(X), np.sin(X)
+from scipy.optimize import newton
 
-plt.plot(X, C)
-plt.plot(X, S)
+def P(V):
+    T=290.15
+    R = 8.314
+    Tc = 305.4
+    Pc = 4.88
+    w = .099
+    Tr = T/Tc
+    b = .08664*R*Tc/Pc
+    m=.480+1.574*w-.176*(w**2)
+    a = .42748*((R*Tc)**2)/Pc*(1+m*(1-Tr**(.5)))**2
+    return (R*T/(V-b)-a/(V*(V+b)))
 
-plt.show()
+V = np.linspace(1,2000,200000)
+G = []
+G = (P(V))
+plt.plot(V,G)
+plt.yscale('log')
+plt.xlabel('V $cm^3/mol$')
+plt.ylabel('P MPa')
+plt.title('Soave-Redlich-Kwong Equation of State')
+plt.ylim([-10,10]);
 
